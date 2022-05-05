@@ -1,6 +1,6 @@
 import cv2
 import sys
-
+import time
 cascPath = "data.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 
@@ -19,7 +19,10 @@ while True:
         minSize=(30, 30),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
+
+
     print(faces)
+    time.sleep(5)
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
