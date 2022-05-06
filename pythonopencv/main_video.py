@@ -48,7 +48,6 @@ if __name__ == '__main__':
     sfr.load_encoding_images("images/")
 
     # Load Camera
-    cap = cv2.VideoCapture(0)
     video_stream_widget = VideoStreamWidget()
     while True:
         try:
