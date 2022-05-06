@@ -1,1 +1,1 @@
-# Face Recognition on Raspberry PI using C
+# Face Recognition on Raspberry PI using ~~C~~ Python!
