@@ -5,6 +5,7 @@ import glob
 import numpy as np
 
 class SimpleFacerec:
+    person = cv2.imread("images/dima utkin.jpg")
     def __init__(self):
         self.known_face_encodings = []
         self.known_face_names = []
@@ -32,8 +33,10 @@ class SimpleFacerec:
             basename = os.path.basename(img_path)
             (filename, ext) = os.path.splitext(basename)
             # Get encoding
-            img_encoding = face_recognition.face_encodings(rgb_img)[0]
-
+            try:
+                img_encoding = face_recognition.face_encodings(rgb_img)[0]
+            except IndexError:
+                print(filename)
             # Store file name and file encoding
             self.known_face_encodings.append(img_encoding)
             self.known_face_names.append(filename)
@@ -41,6 +44,7 @@ class SimpleFacerec:
 
     def detect_known_faces(self, frame):
         small_frame = cv2.resize(frame, (0, 0), fx=self.frame_resizing, fy=self.frame_resizing)
+
         # Find all the faces and face encodings in the current frame of video
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
@@ -61,7 +65,9 @@ class SimpleFacerec:
             # Or instead, use the known face with the smallest distance to the new face
             face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
+
             #if matches[best_match_index]:
+
             name = self.known_face_names[best_match_index]
             face_names.append(name)
 
