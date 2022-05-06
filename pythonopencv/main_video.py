@@ -1,5 +1,7 @@
 import cv2
 from simple_facerec import SimpleFacerec
+import cmake
+
 import numpy as np
 # Encode faces from a folder
 sfr = SimpleFacerec()
