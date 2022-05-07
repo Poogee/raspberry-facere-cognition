@@ -7,6 +7,9 @@ from threading import Thread
 import numpy as np
 # Encode faces from a folder
 
+t = 20
+face_locations = [0]
+face_names = ["xd"]
 
 class VideoStreamWidget(object):
     def __init__(self, src=0):
@@ -27,18 +30,16 @@ class VideoStreamWidget(object):
 
     def show_frame(self , t, face_locations, face_names):
         # Display frames in main program
-        if t == 1000:
+        if t%20==0:
             face_locations, face_names = sfr.detect_known_faces(self.frame)
-            t = 0
-        t = t + 1
         for face_loc, name in zip(face_locations, face_names):
             y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
-
             cv2.putText(self.frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 255, 255), 2)
             cv2.rectangle(self.frame, (x1, y1), (x2, y2), (255, 255, 255), 2)
-        # img = cv2.imread("images/dima utkin.jpg")
-        # Hori = np.concatenate((frame, img), axis=1)
-        # cv2.imshow('HORIZONTAL', Hori)
+            # img = cv2.imread("images/dima utkin.jpg")
+            # Hori = np.concatenate((frame, img), axis=1)
+            # cv2.imshow('HORIZONTAL', Hori)
+        t = t + 1
         cv2.imshow("Frame", self.frame)
 
         key = cv2.waitKey(1)
@@ -46,6 +47,7 @@ class VideoStreamWidget(object):
             self.capture.release()
             cv2.destroyAllWindows()
             exit(1)
+        return t , face_locations , face_names
 
 
 if __name__ == '__main__':
@@ -56,6 +58,6 @@ if __name__ == '__main__':
     video_stream_widget = VideoStreamWidget()
     while True:
         try:
-            video_stream_widget.show_frame(1000, 0 ,"xd")
+            t, face_locations, face_names= video_stream_widget.show_frame(t, face_locations ,face_names)
         except AttributeError:
             pass
