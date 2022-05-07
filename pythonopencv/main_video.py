@@ -11,6 +11,8 @@ import numpy as np
 class VideoStreamWidget(object):
     def __init__(self, src=0):
         self.capture = cv2.VideoCapture(src)
+        self.capture.set(3,170)
+        self.capture.set(4,120)
         # Start the thread to read frames from the video stream
         self.thread = Thread(target=self.update, args=())
         self.thread.daemon = True
