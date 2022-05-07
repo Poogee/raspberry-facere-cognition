@@ -25,9 +25,12 @@ class VideoStreamWidget(object):
                 (self.status, self.frame) = self.capture.read()
             time.sleep(.01)
 
-    def show_frame(self):
+    def show_frame(self , t, face_locations, face_names):
         # Display frames in main program
-        face_locations, face_names = sfr.detect_known_faces(self.frame)
+        if t == 1000:
+            face_locations, face_names = sfr.detect_known_faces(self.frame)
+            t = 0
+        t = t + 1
         for face_loc, name in zip(face_locations, face_names):
             y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
@@ -37,6 +40,7 @@ class VideoStreamWidget(object):
         # Hori = np.concatenate((frame, img), axis=1)
         # cv2.imshow('HORIZONTAL', Hori)
         cv2.imshow("Frame", self.frame)
+
         key = cv2.waitKey(1)
         if key == ord('q'):
             self.capture.release()
@@ -52,6 +56,6 @@ if __name__ == '__main__':
     video_stream_widget = VideoStreamWidget()
     while True:
         try:
-            video_stream_widget.show_frame()
+            video_stream_widget.show_frame(1000, 0 ,"xd")
         except AttributeError:
             pass

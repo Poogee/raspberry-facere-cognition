@@ -6,7 +6,6 @@ import subprocess
 import numpy as np
 
 class SimpleFacerec:
-    person = cv2.imread("images/dima utkin.jpg")
     def __init__(self):
         self.known_face_encodings = []
         self.known_face_names = []
@@ -68,9 +67,8 @@ class SimpleFacerec:
             face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
 
-            #if matches[best_match_index]:
-
-            name = self.known_face_names[best_match_index]
+            if matches[best_match_index]:
+                name = self.known_face_names[best_match_index]
             face_names.append(name)
 
 
