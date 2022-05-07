@@ -7,15 +7,15 @@ from threading import Thread
 import numpy as np
 # Encode faces from a folder
 
-t = 20
+t = 200
 face_locations = [0]
 face_names = ["xd"]
 
 class VideoStreamWidget(object):
-    def __init__(self, src=0):
+    def __init__(self, src=1):
         self.capture = cv2.VideoCapture(src)
-        self.capture.set(3,170)
-        self.capture.set(4,120)
+        self.capture.set(4, 640)
+        self.capture.set(3, 480)
         # Start the thread to read frames from the video stream
         self.thread = Thread(target=self.update, args=())
         self.thread.daemon = True
